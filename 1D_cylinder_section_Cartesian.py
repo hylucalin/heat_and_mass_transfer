@@ -6,7 +6,7 @@ MAX = 1
 MIN = 0
 alpha = 10.09 * 1E-5    # m2/s
 pho_cp = 8960 * 410     # kg/m3 * J/kgK = J/m3K
-g_dot = 1*1E4           # W/m3
+g_dot = 1*1E5           # W/m3
 
 # Recrtangular window setup
 Window_Width = 16
@@ -18,14 +18,14 @@ x_lim = [-1, 1]
 y_lim = [-1, 1]
 
 # Simulation parameters
-cell_size_x = 0.1
-cell_size_y = 0.1
-time_step = 1
-sim_time = 1500
+cell_size_x = 0.05
+cell_size_y = 0.05
+time_step = 0.1
+sim_time = 15
 Num_of_iterations = int(sim_time/time_step)
 MAX_percentage_change = 0.15
 MIN_percentage_change = 0.01
-MAX_time_step = 5
+MAX_time_step = 0.5
 Num_of_iteration = 0
 time = 0
 
