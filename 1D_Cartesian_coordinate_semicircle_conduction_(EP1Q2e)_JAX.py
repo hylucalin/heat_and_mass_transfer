@@ -1,5 +1,6 @@
 # Question 2(d) of Examples Paper 1
 # This is only for my personal simulation
+# Observation: if def c = CFL = (alpha*time_step)/(cell_size_x*cell_size_y), 1/4 seems to be a critical number for numerical stability (e.g. alpha = 10.09 * 1E-5, dx=dy=0.01 and dt=0.24785, CFL = 0.25008065
 
 import matplotlib.pyplot as plt
 
@@ -20,12 +21,12 @@ Window_Height = 7
 # Simulation boundaries
 ## Note: Object should be bounded in x and y
 x_lim = [0, 1]
-y_lim = [-1, 1]
+y_lim = [0, 1]
 
 # Simulation parameters
 cell_size_x = 0.01
 cell_size_y = 0.01
-time_step = 0.1
+time_step = 0.24785
 sim_time = 10000
 Num_of_iterations = int(sim_time/time_step)
 Num_of_iteration = 0
@@ -45,7 +46,7 @@ def jax_laplacian(T, ds=cell_size_x):
 def step(T, mask, dt = time_step):
   dT = dt * (alpha * jax_laplacian(T) + g_dot/pho_cp)
   T = jnp.where(mask, T + dT, T)
-#  T.at[-1, :].set(T[-2, :])
+  T = T.at[0, :].set(T[1, :])
   return T
 
 # Temperature grid initialisation
@@ -71,7 +72,7 @@ T_jnp = T_jnp.at[:,0].set(T1)   # all row, first column
 
 # Returns a mask indicating the update region
 def mask_unit_circle(X, Y):
-  return (((X**2 + Y**2) <1) & (X>0))
+  return (((X**2 + Y**2) <1) & (X>0) & (Y>0))
 
 quater_circle_mask = mask_unit_circle(xs, ys)
 print(quater_circle_mask)
